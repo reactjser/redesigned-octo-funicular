@@ -1,28 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="showComp = !showComp" style="cursor: pointer">
+      {{ showComp ? '关闭' : '开启' }}
+    </button>
+    <CascaderSelect v-if="showComp" :options="options" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CascaderSelect from './components/cascader-select-panel.vue'
+import { genMockData } from './components/mockData'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CascaderSelect,
+  },
+  data() {
+    return {
+      showComp: true,
+      options: genMockData()
+    }
+  },
+  watch: {
+    showComp() {
+      this.options = genMockData();
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
